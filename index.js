@@ -17,7 +17,7 @@ client.connect(err => {
   const blogCollection = client.db("blogfield").collection("blog");
 
   app.get('/', (req, res) => {
-    res.send('hello world')
+    res.send('database connected')
   })
   
   app.post('/addBlog', (req, res) => {
