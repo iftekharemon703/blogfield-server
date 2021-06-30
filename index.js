@@ -2,7 +2,10 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
 const ObjectId = require('mongodb').ObjectId;
-require('dotenv').config()
+require('dotenv').config();
+
+
+const port = 5000;
 
 const uri = "mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.e8itm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -15,10 +18,6 @@ app.use(cors());
 
 client.connect(err => {
   const blogCollection = client.db("blogfield").collection("blog");
-
-  app.get('/', (req, res) => {
-    res.send('database connected')
-  })
   
   app.post('/addBlog', (req, res) => {
     const blog = req.body;
@@ -49,8 +48,9 @@ client.connect(err => {
         res.send(result.deletedCount > 0)
       })
   })
-})
+  app.get('/', (req, res) => {
+    res.send('database connected')
+  })
+});
 
-;
-
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || port);
